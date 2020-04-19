@@ -11,6 +11,7 @@ A sample from the MCMC trajectory is:
 ![trajectory MALA](./img/traj_mala.png)
 
 Also in the `mala_test.py` one can find a small function to compute autocorrelation and check that the Markov Chain "mixes" well:
+
 ![Autocorrelation MALA](./img/autocorr_mala.png)
 
 To help tuning parameters of the MALA algorithm, it is possible to print the acceptation ration. A good empirical fit for this is around 63%. It means that the chain is exploring enough so that around 63% of the propositions are accepted as the next step.
@@ -49,7 +50,8 @@ def density_to_sample_from(x):
 probabilistical_model = MODEL(density=density_to_sample_from)
 
 # Create MCMC method
-mala_mcmc = MALA(probabilistical_model, metric=torch.eye(DIMENSION_INPUT_SPACE,		 gradient_step=GRADIENT_STEPSIZE,
+mala_mcmc = MALA(probabilistical_model, metric=torch.eye(DIMENSION_INPUT_SPACE,
+                 gradient_step=GRADIENT_STEPSIZE,
 	         random_step=RANDOM_STEPSIZE,
 	    	 initialization=INITIAL_POINT))
 
