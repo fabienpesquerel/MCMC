@@ -21,10 +21,10 @@ class MODEL:
             self.log_density_gradient_func = log_density_gradient
         else:
             def log_density_gradient_func(x):
-                x = torch.tensor(x.copy(), requires_grad=True)
+                x = x.clone().detach().requires_grad_(True)
                 w = self.log_density_func(x)
                 w.backward()
-                return x.copy()
+                return x.clone().detach()
             self.log_density_gradient_func = log_density_gradient_func
 
     def log_gradient(self, x):

@@ -78,6 +78,7 @@ def plot_autocorrelation(points, axis_list, kappa=100, legend=False):
 
 
 if __name__ == '__main__':
+    """
     # - GAUSSIAN DISTRIBUTION EXAMPLE
     MEAN = torch.zeros(2)
     COV = torch.tensor([[1, .9], [.9, 1]])
@@ -105,6 +106,7 @@ if __name__ == '__main__':
     auto_corr = auto_correlation(points, 100)
     plot(points, burnin=200, n_points=nbr_samples-201, kind='kde')
     plot_autocorrelation(points, [0, 1])
+"""
 
     # -- MALA with adjusted acceptation ratio - GAUSSIAN
     # nbr_samples = 10000
@@ -113,3 +115,20 @@ if __name__ == '__main__':
     # points = np.array(points)
     # plot(points, burnin=0, n_points=nbr_samples-1)
     # plot(points, burnin=200, n_points=nbr_samples-201)
+
+    # - GAUSSIAN DISTRIBUTION EXAMPLE
+    MEAN = torch.zeros(2)
+    COV = torch.tensor([[1, .9], [.9, 1]])
+    GAUSSIAN_DENSITY = gaussian_torch(MEAN, COV)
+    GAUSSIAN = MODEL(density=GAUSSIAN_DENSITY)
+    INIT_POINT = 2 * torch.randn_like(MEAN) + 3
+
+    # -- MALA - GAUSSIAN
+    nbr_samples = 50000
+    MALA_GAUSSIAN = MALA(GAUSSIAN, torch.eye(2), 2e-2, 4e-1, INIT_POINT)
+    points = MALA_GAUSSIAN.fit(nbr_samples)
+    points = np.array(points)
+    # plot(points, burnin=0, n_points=nbr_samples-1)
+    auto_corr = auto_correlation(points, 100)
+    plot(points, burnin=200, n_points=nbr_samples-201, kind='kde')
+    plot_autocorrelation(points, [0, 1])
