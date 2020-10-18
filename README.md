@@ -10,13 +10,13 @@ For instance, if we were to sample from a Gaussian distribution using MALA algor
 A sample from the MCMC trajectory is:
 ![trajectory MALA](./img/traj_mala.png)
 
-Also in the `mala_test.py` one can find a small function to compute autocorrelation and check that the Markov Chain "mixes" well:
+Within the `mala_test.py` file, one can also find a small function to compute autocorrelation and check that the Markov Chain "mixes" well:
 
 ![Autocorrelation MALA](./img/autocorr_mala.png)
 
-To help tuning parameters of the MALA algorithm, it is possible to print the acceptation ration. A good empirical fit for this is around 63%. It means that the chain is exploring enough so that around 63% of the propositions are accepted as the next step.
+To help tuning parameters of the MALA algorithm, it is possible to print the acceptation ratio. A good empirical fit for this is around 63%. It means that the chain is exploring enough so that around 63% of the propositions are accepted as the next step.
 
-Appart from this file, please find a small tutorial in the `tutorial.ipynb` file.
+One can also find a small tutorial in the `tutorial.ipynb` file.
 
 ## Practical use
 
@@ -44,16 +44,16 @@ def density_to_sample_from(x):
     # ...
     # Some pyTorch thingsgummy
     # ...
-    return result
+    return density_at_x
 
 # Create probabilistical model
 probabilistical_model = MODEL(density=density_to_sample_from)
 
 # Create MCMC method
-mala_mcmc = MALA(probabilistical_model, metric=torch.eye(DIMENSION_INPUT_SPACE,
+mala_mcmc = MALA(probabilistical_model, metric=torch.eye(DIMENSION_INPUT_SPACE),
                  gradient_step=GRADIENT_STEPSIZE,
 	         random_step=RANDOM_STEPSIZE,
-	    	 initialization=INITIAL_POINT))
+	    	 initialization=INITIAL_POINT)
 
 # Sample
 SAMPLES = mala_mcmc.fit(NBR_SAMPLES)
